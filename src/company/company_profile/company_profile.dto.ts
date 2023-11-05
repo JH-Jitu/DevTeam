@@ -13,7 +13,7 @@ export class CreateCompanyProfileDto {
   @Max(31)
   @Matches(/^[A-Za-z]+$/, {
     message:
-      'The name should consist of letters only, and no spaces or special characters are allowed.',
+      'The name must consist of letters only, and no spaces or special characters are allowed.',
   })
   companyName: string;
   @IsString()
