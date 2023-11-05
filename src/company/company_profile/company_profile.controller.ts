@@ -10,19 +10,35 @@ import {
   UseInterceptors,
   UploadedFile,
   Res,
+  ParseIntPipe,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterError, diskStorage } from 'multer';
+import { CompanyProfileService } from './company_profile.service';
+import { CreateCompanyProfileDto } from './company_profile.dto';
 @Controller('company')
 export class CompanyProfileController {
-  @Get('getAllCompanyInfo')
-  getCompanyProfile() {
-    
+  constructor(private companyProfileService: CompanyProfileService) {}
+
+  //add company profile
+  @Post('addCompanyProfile')
+  @UsePipes(new ValidationPipe())
+  addCompanyProfile(@Body() data: CreateCompanyProfileDto) {
+    return this.companyProfileService.createCompanyProfile(data);
   }
 
+  //get all company profile info
+  @Get('getAllCompanyInfo')
+  getCompanyProfile() {
+    return this.companyProfileService.getAllCompanyProfileInfo();
+  }
+
+  //get company profile info by id
   @Get('getCompanyByID/:id')
-  getCompanyByID(@Param() companyId: number) {
-    return companyId;
+  getCompanyByID(@Param('id', ParseIntPipe) companyById: number) {
+    return this.companyProfileService.getComapnyProfileById(companyById);
   }
 
   @Put('updateCompany')
@@ -35,14 +51,20 @@ export class CompanyProfileController {
     return updateCompanySize;
   }
 
+
+
+
+
+
+
+
+
+
+
+
   @Delete('deleteCompanyName/:companyName')
   deleteCompanyID(@Param('companyName') companyName: string) {
     return companyName;
-  }
-
-  @Post('newCompanyProfile')
-  newCompanyProfile(@Body() company_name: string) {
-    return company_name;
   }
 
   @Patch('updateCompanyContact/:id')
