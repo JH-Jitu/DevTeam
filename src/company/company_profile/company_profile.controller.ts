@@ -18,6 +18,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterError, diskStorage } from 'multer';
 import { CompanyProfileService } from './company_profile.service';
 import { CreateCompanyProfileDto } from './company_profile.dto';
+import { updateCompanyProfileDto } from './updateCompany_profile.dto';
 @Controller('company')
 export class CompanyProfileController {
   constructor(private companyProfileService: CompanyProfileService) {}
@@ -52,8 +53,11 @@ export class CompanyProfileController {
 
   //upadte the company size
   @Patch('updateCompanySize/:id')
-  updateCompanySize(@Body() updateCompanySize: number) {
-    return updateCompanySize;
+  updateCompanySize(
+    @Param('id', ParseIntPipe) updateId: number,
+    @Body() updateCompanySize: updateCompanyProfileDto,
+    ) {
+    return this.companyProfileService.updateCompanySize(updateId, updateCompanySize);
   }
 
   @Delete('deleteCompanyName/:companyName')

@@ -40,12 +40,13 @@ export class CompanyProfileService {
     return this.userRepository.findOneBy({ companyId: id });
   }
 
-  async updatePassword(
+  //update company size
+  async updateCompanySize(
     id: number, 
-    updatePass: updatePasswordDto
-    ): Promise<CompanyEntity> {
-      await this.userRepository.update(id, {password:updatePass.updatedPassword} );
-      return this.userRepository.findOneBy({id: id}); 
+    updateCompanySize: updateCompanyProfileDto
+    ): Promise<CompanyProfileEntity> {
+      await this.userRepository.update(id, {companySize:updateCompanySize.updateCompanySize} );
+      return this.userRepository.findOneBy({companyId: id}); 
     }
 
   async deleteUser(
