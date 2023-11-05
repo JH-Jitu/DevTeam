@@ -60,9 +60,10 @@ export class CompanyProfileController {
     return this.companyProfileService.updateCompanySize(updateId, updateCompanySize);
   }
 
-  @Delete('deleteCompanyName/:companyName')
-  deleteCompanyID(@Param('companyName') companyName: string) {
-    return companyName;
+  // delete company
+  @Delete('deleteCompanyName/:id')
+  deleteCompanyID(@Param('id') companyId: number) {
+    return this.companyProfileService.deleteCompanyProfile(companyId);
   }
 
   @Patch('updateCompanyContact/:id')

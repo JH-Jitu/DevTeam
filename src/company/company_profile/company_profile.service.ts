@@ -49,10 +49,10 @@ export class CompanyProfileService {
       return this.userRepository.findOneBy({companyId: id}); 
     }
 
-  async deleteUser(
-    id: number
+  async deleteCompanyProfile(
+    companyId: number
   ): Promise<void> {
-    await this.userRepository.delete(id);
+    await this.userRepository.delete(companyId);
   }
 
 
