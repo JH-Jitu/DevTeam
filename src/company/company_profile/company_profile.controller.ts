@@ -31,7 +31,7 @@ export class CompanyProfileController {
   }
 
   @Patch('updateCompanySize/:id')
-  updateCompanyID(@Body() updateCompanySize: number) {
+  updateCompanySize(@Body() updateCompanySize: number) {
     return updateCompanySize;
   }
 
@@ -51,7 +51,7 @@ export class CompanyProfileController {
   }
 
   @Delete('deleteCompanyContact/:companyPhoneNumber')
-  deleteCompanyContactID(@Param('companyPhoneNumber') companyPhoneNumber: number) {
+  deleteCompanyPhoneNumber(@Param('companyPhoneNumber') companyPhoneNumber: number) {
     return companyPhoneNumber;
   }
 

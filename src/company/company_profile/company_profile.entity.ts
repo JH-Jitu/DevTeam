@@ -1,4 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import { Entity, 
+    Column, 
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 @Entity('companyProfile')
 export class CompanyProfileEntity{
 @PrimaryGeneratedColumn()
