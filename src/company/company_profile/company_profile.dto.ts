@@ -25,8 +25,9 @@ export class CreateCompanyProfileDto {
   @IsEmail()
   @Matches(/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,{
     message:
-        'Email must be anemail formate.'
+        'Email must be an email formate.'
   })
+  companyEmail: string;
   @IsPhoneNumber()
   companyPhoneNumber: number;
   @IsString()
