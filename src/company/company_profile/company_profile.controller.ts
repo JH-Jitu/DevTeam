@@ -40,4 +40,15 @@ export class CompanyProfileController {
   newCompanyProfile(@Body() company_name: string) {
     return company_name;
   }
+
+  @Patch('updateCompanyContact/:id')
+  updateCompanyContact(@Body() updateCompanyContact: string) {
+    return updateCompanyContact;
+  }
+
+  @Delete('deleteCompanyContact/:id')
+  deleteCompanyContactID(@Param('id') company_contact: string) {
+    return company_contact;
+  }
+
 }
