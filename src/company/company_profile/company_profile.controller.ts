@@ -7,8 +7,11 @@ import {
   Post,
   Put,
   Patch,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
-
+import { FileInterceptor } from '@nestjs/platform-express';
+import { MulterError, diskStorage } from 'multer';
 @Controller('company')
 export class CompanyProfileController {
   @Get('getAllCompanyInfo')
@@ -46,9 +49,43 @@ export class CompanyProfileController {
     return updateCompanyContact;
   }
 
-  @Delete('deleteCompanyContact/:id')
-  deleteCompanyContactID(@Param('id') company_contact: string) {
-    return company_contact;
+  @Delete('deleteCompanyContact/:companyPhoneNumber')
+  deleteCompanyContactID(@Param('id') companyPhoneNumber: number) {
+    return companyPhoneNumber;
   }
+  
+  @Post('uploadCompanyLogo')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      fileFilter: (req, file, cb) => {
+        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
+          cb(null, true);
+        else {
+          cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
+        }
+      },
+      limits: { fileSize: 60000000000 },
+      storage: diskStorage({
+        destination: './uploads',
+        filename: function (req, file, cb) {
+          cb(null, Date.now() + file.originalname);
+        },
+      }),
+    }),
+  )
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return file;
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 }
