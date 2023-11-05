@@ -9,6 +9,7 @@ import {
   Patch,
   UseInterceptors,
   UploadedFile,
+  Res,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterError, diskStorage } from 'multer';
@@ -19,8 +20,8 @@ export class CompanyProfileController {
     
   }
 
-  @Get('getCompanyID/:id')
-  getCompanyID(@Param() companyId: number) {
+  @Get('getCompanyByID/:id')
+  getCompanyByID(@Param() companyId: number) {
     return companyId;
   }
 
@@ -29,14 +30,14 @@ export class CompanyProfileController {
     return updatecompany;
   }
 
-  @Patch('updateCompanyID/:id')
-  updateCompanyID(@Body() updateCompanyID: number) {
-    return updateCompanyID;
+  @Patch('updateCompanySize/:id')
+  updateCompanyID(@Body() updateCompanySize: number) {
+    return updateCompanySize;
   }
 
-  @Delete('deleteCompanyID/:id')
-  deleteCompanyID(@Param('id') company_id: number) {
-    return company_id;
+  @Delete('deleteCompanyName/:companyName')
+  deleteCompanyID(@Param('companyName') companyName: string) {
+    return companyName;
   }
 
   @Post('newCompanyProfile')
@@ -50,10 +51,10 @@ export class CompanyProfileController {
   }
 
   @Delete('deleteCompanyContact/:companyPhoneNumber')
-  deleteCompanyContactID(@Param('id') companyPhoneNumber: number) {
+  deleteCompanyContactID(@Param('companyPhoneNumber') companyPhoneNumber: number) {
     return companyPhoneNumber;
   }
-  
+
   @Post('uploadCompanyLogo')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -77,15 +78,8 @@ export class CompanyProfileController {
     return file;
   }
 
-
-
-
-
-
-
-
-
-
-
-
+  @Get('/getImage/:name')
+  getImages(@Param('name') name, @Res() res) {
+    return res.sendFile(name, { root: './uploads' });
+  }
 }
