@@ -23,7 +23,7 @@ export class CompanyProfileService {
   async getAllCompanyProfileInfo(): Promise<CompanyProfileEntity[]> {
     return this.userRepository.find();
   }
-  
+
 // get company profile info by id
   async getComapnyProfileById(
     id: number
@@ -31,7 +31,28 @@ export class CompanyProfileService {
     return this.userRepository.findOneBy({ companyId: id });
   }
 
+  //update company profile data
+  async updateAllCompanyProfile(
+    id: number,
+    updateData: CreateCompanyProfileDto,
+  ): Promise<CompanyProfileEntity> {
+    await this.userRepository.update(id, updateData);
+    return this.userRepository.findOneBy({ companyId: id });
+  }
 
+  async updatePassword(
+    id: number, 
+    updatePass: updatePasswordDto
+    ): Promise<CompanyEntity> {
+      await this.userRepository.update(id, {password:updatePass.updatedPassword} );
+      return this.userRepository.findOneBy({id: id}); 
+    }
+
+  async deleteUser(
+    id: number
+  ): Promise<void> {
+    await this.userRepository.delete(id);
+  }
 
 
 
