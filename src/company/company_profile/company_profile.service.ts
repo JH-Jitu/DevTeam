@@ -5,6 +5,7 @@ import { CompanyProfileEntity } from './company_profile.entity';
 import { CreateCompanyProfileDto } from './company_profile.dto';
 import { updateCompanyProfileDto } from './updateCompany_profile.dto';
 
+
 @Injectable()
 export class CompanyProfileService {
   constructor(
@@ -49,16 +50,37 @@ export class CompanyProfileService {
       return this.userRepository.findOneBy({companyId: id}); 
     }
 
+ //delete company profile
   async deleteCompanyProfile(
     companyId: number
   ): Promise<void> {
     await this.userRepository.delete(companyId);
   }
 
+  //update all company contact
+  async updateAllCompanyContact(
+    id: number,
+    contactData: CreateCompanyProfileDto,
+  ): Promise<CompanyProfileEntity> {
+    await this.userRepository.update(id, contactData);
+    return this.userRepository.findOneBy({ companyId: id });
+  }
 
+  //update company contact email
+  async updateCompanyContact(
+    id: number, 
+    updateCompanyEmail: updateCompanyProfileDto
+    ): Promise<CompanyProfileEntity> {
+      await this.userRepository.update(id, {companyEmail:updateCompanyEmail.updatecompanyEmail} );
+      return this.userRepository.findOneBy({companyId: id}); 
+    }
 
-
-
+  //delete company profile
+  async deleteCompanyContact(
+    companyPhoneNumber: number
+  ): Promise<void> {
+    await this.userRepository.delete(companyPhoneNumber);
+  }
 
 
 

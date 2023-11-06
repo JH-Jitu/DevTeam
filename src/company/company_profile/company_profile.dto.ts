@@ -3,9 +3,9 @@ import { IsString,
     IsDate, 
     Min, 
     Max, 
+    IsNumber,
     IsEmail,
-    IsPhoneNumber,
-    IsNumber} from 'class-validator';
+    IsPhoneNumber} from 'class-validator';
 export class CreateCompanyProfileDto {
   companyId: number;
   @IsString()

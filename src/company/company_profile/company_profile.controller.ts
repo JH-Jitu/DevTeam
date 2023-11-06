@@ -60,17 +60,31 @@ export class CompanyProfileController {
     return this.companyProfileService.updateCompanySize(updateId, updateCompanySize);
   }
 
-  // delete company
+  //delete company
   @Delete('deleteCompanyName/:id')
-  deleteCompanyID(@Param('id') companyId: number) {
+  deleteCompanyProfile(@Param('id') companyId: number) {
     return this.companyProfileService.deleteCompanyProfile(companyId);
   }
 
-  @Patch('updateCompanyContact/:id')
-  updateCompanyContact(@Body() updateCompanyContact: string) {
-    return updateCompanyContact;
+  //update all company contact
+  @Put('updateAllCompanyContact/:id')
+  updateAllCompanyContact(
+  @Param('id', ParseIntPipe) updateId: number,
+  @Body() updateCompanyContact: CreateCompanyProfileDto,
+  ) {
+  return this.companyProfileService.updateAllCompanyContact(updateId, updateCompanyContact);
   }
 
+  //update company email
+ @Patch('updateCompanyEmail/:id')
+  updateCompanyContact(
+    @Param('id', ParseIntPipe) updateId: number,
+    @Body() updateCompanyEmail: updateCompanyProfileDto,
+  ) {
+    return this.companyProfileService.updateCompanyContact(updateId, updateCompanyEmail);
+  }
+
+  //delete company phone number
   @Delete('deleteCompanyContact/:companyPhoneNumber')
   deleteCompanyPhoneNumber(
     @Param('companyPhoneNumber') companyPhoneNumber: number,
@@ -78,6 +92,7 @@ export class CompanyProfileController {
     return companyPhoneNumber;
   }
 
+  //add company logo 
   @Post('uploadCompanyLogo')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -101,6 +116,7 @@ export class CompanyProfileController {
     return file;
   }
 
+  // get the company logo in the postman
   @Get('/getImage/:name')
   getImages(@Param('name') name, @Res() res) {
     return res.sendFile(name, { root: './uploads' });
