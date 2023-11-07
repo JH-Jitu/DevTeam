@@ -1,16 +1,17 @@
 import { IsString, 
     Matches, 
-    IsDate, 
-    Min, 
-    Max, 
+    IsDate,  
     IsNumber,
     IsEmail,
-    IsPhoneNumber} from 'class-validator';
+    MinLength,
+    MaxLength,
+    IsDateString,
+    } from 'class-validator';
 export class CreateCompanyProfileDto {
   companyId: number;
   @IsString()
-  @Min(3)
-  @Max(31)
+  @MinLength(3)
+  @MaxLength(31)
   @Matches(/^[A-Za-z]+$/, {
     message:
       'The name must consist of letters only, and no spaces or special characters are allowed.',
@@ -18,18 +19,20 @@ export class CreateCompanyProfileDto {
   companyName: string;
   @IsString()
   companyType: string;
-  @IsDate()
+  @IsString()
   campanyStartDate: string;
   @IsNumber()
   companySize: number;
   @IsEmail()
   @Matches(/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,{
-    message:
-        'Email must be an email formate.'
-  })
+     message:
+         'Email must be an email formate.'
+   })
   companyEmail: string;
-  @IsPhoneNumber()
+  @IsNumber()
   companyPhoneNumber: number;
   @IsString()
   location: string;
 }
+
+
