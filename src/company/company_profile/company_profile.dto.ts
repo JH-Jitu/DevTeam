@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsString, 
     Matches, 
     IsDate,  
@@ -5,7 +6,6 @@ import { IsString,
     IsEmail,
     MinLength,
     MaxLength,
-    IsDateString,
     } from 'class-validator';
 export class CreateCompanyProfileDto {
   companyId: number;
@@ -19,8 +19,9 @@ export class CreateCompanyProfileDto {
   companyName: string;
   @IsString()
   companyType: string;
-  @IsString()
-  campanyStartDate: string;
+  @IsDate()
+  @Type(() => Date)
+  createdDate: Date;
   @IsNumber()
   companySize: number;
   @IsEmail()
