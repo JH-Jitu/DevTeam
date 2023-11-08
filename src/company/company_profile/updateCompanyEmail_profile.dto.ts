@@ -5,7 +5,7 @@ import {
     MaxLength,
     MinLength,
 } from 'class-validator';
-export class updateCompanyProfileDto {
+export class updateCompanyEmailDto {
     @IsString()
     @MinLength(3)
     @MaxLength(31)
@@ -19,5 +19,5 @@ export class updateCompanyProfileDto {
     message:
         'Email must be an email formate.'
   })
-  updatecompanyEmail: string;
+  updatedcompanyEmail: string;
 }

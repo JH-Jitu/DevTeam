@@ -18,7 +18,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterError, diskStorage } from 'multer';
 import { CompanyProfileService } from './company_profile.service';
 import { CreateCompanyProfileDto } from './company_profile.dto';
-import { updateCompanyProfileDto } from './updateCompany_profile.dto';
+import { updateCompanyEmailDto } from './updateCompanyEmail_profile.dto';
 @Controller('company')
 export class CompanyProfileController {
   constructor(private companyProfileService: CompanyProfileService) {}
@@ -55,7 +55,7 @@ export class CompanyProfileController {
  @Patch('updateCompanyName/:companyId')
  updateCompanyName(
    @Param('companyId', ParseIntPipe) updateId: number,
-  @Body() updatecompanyName: updateCompanyProfileDto,
+  @Body() updatecompanyName: updateCompanyEmailDto,
   ) {
        return this.companyProfileService.updateCompanyName(updateId, updatecompanyName);
  }
@@ -80,7 +80,7 @@ export class CompanyProfileController {
  @Patch('updateCompanyEmail/:companyId')
   updateCompanyContact(
     @Param('companyId', ParseIntPipe) updateId: number,
-    @Body() updateCompanyEmail: updateCompanyProfileDto,
+    @Body() updateCompanyEmail: updateCompanyEmailDto,
   ) {
     return this.companyProfileService.updateCompanyContact(updateId, updateCompanyEmail);
   }

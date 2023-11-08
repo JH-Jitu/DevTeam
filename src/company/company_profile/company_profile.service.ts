@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CompanyProfileEntity } from './company_profile.entity'; 
 import { CreateCompanyProfileDto } from './company_profile.dto';
-import { updateCompanyProfileDto } from './updateCompany_profile.dto';
+import { updateCompanyEmailDto } from './updateCompanyEmail_profile.dto';
 
 
 @Injectable()
@@ -44,10 +44,10 @@ export class CompanyProfileService {
   //update company name
   async updateCompanyName(
     companyId: number, 
-    updatecompanyName: updateCompanyProfileDto
+    updatecompanyName: updateCompanyEmailDto
     ): Promise<CompanyProfileEntity> {
       await this.userRepository.update(companyId, {companyName:updatecompanyName.upadatedcompanyName} );
-      return this.userRepository.findOneBy({companyId}); 
+      return this.userRepository.findOneBy({companyId: companyId}); 
     }
 
  //delete company profile
@@ -69,9 +69,9 @@ export class CompanyProfileService {
   //update company contact email
   async updateCompanyContact(
     companyId: number, 
-    updatecompanyEmail: updateCompanyProfileDto
+    updatecompanyEmail: updateCompanyEmailDto
     ): Promise<CompanyProfileEntity> {
-      await this.userRepository.update(companyId, {companyEmail:updatecompanyEmail.updatecompanyEmail} );
+      await this.userRepository.update(companyId, {companyEmail:updatecompanyEmail.updatedcompanyEmail} );
       return this.userRepository.findOneBy({companyId: companyId}); 
     }
 
