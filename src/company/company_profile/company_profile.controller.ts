@@ -31,19 +31,19 @@ export class CompanyProfileController {
   }
 
   //get all company profile info
-  @Get('getAllCompanyInfo')
+  @Get('getAllCompanyProfile')
   getCompanyProfile() {
     return this.companyProfileService.getAllCompanyProfileInfo();
   }
 
   //get company profile info by id
-  @Get('getCompanyByID/:companyId')
+  @Get('getCompanyProfileByID/:companyId')
   getCompanyByID(@Param('companyId', ParseIntPipe) companyById: number) {
     return this.companyProfileService.getComapnyProfileById(companyById);
   }
 
   //update company profile data
-  @Put('updateAllCompanyProfile/:compayId')
+  @Put('updateAllCompanyProfile/:companyId')
   updateAllCompanyProfile(
     @Param('companyId', ParseIntPipe) updateId: number,
     @Body() updateCompanyProfile: CreateCompanyProfileDto,

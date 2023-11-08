@@ -6,6 +6,8 @@ import { IsString,
     IsEmail,
     MinLength,
     MaxLength,
+    IsMobilePhone,
+    IsNotEmpty,
     } from 'class-validator';
 export class CreateCompanyProfileDto {
   companyId: number;
@@ -30,10 +32,14 @@ export class CreateCompanyProfileDto {
          'Email must be an email formate.'
    })
   companyEmail: string;
-  @IsNumber()
-  companyPhoneNumber: number;
   @IsString()
-  location: string;
+  @IsNotEmpty()
+  @Matches(/^\+[1-9]\d{1,14}$/,{
+    message: "phone number must be in FormDataEvent."
+  })
+  companyPhoneNumber: string;
+  @IsString()
+  companyLocation: string;
 }
 
 
