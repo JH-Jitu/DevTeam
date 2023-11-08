@@ -11,7 +11,7 @@ companyName: string;
 @Column()
 companyType: string;
 @Column()
-createdDate: Date;
+companyCreatedDate: Date;
 @Column()
 companySize: number;
 @Column()

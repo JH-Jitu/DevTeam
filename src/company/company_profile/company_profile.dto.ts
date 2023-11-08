@@ -21,7 +21,7 @@ export class CreateCompanyProfileDto {
   companyType: string;
   @IsDate()
   @Type(() => Date)
-  createdDate: Date;
+  companyCreatedDate: Date;
   @IsNumber()
   companySize: number;
   @IsEmail()

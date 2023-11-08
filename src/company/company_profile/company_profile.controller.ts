@@ -37,22 +37,22 @@ export class CompanyProfileController {
   }
 
   //get company profile info by id
-  @Get('getCompanyByID/:id')
-  getCompanyByID(@Param('id', ParseIntPipe) companyById: number) {
+  @Get('getCompanyByID/:companyId')
+  getCompanyByID(@Param('companyId', ParseIntPipe) companyById: number) {
     return this.companyProfileService.getComapnyProfileById(companyById);
   }
 
   //update company profile data
-  @Put('updateAllCompanyProfile/:id')
+  @Put('updateAllCompanyProfile/:compayId')
   updateAllCompanyProfile(
-    @Param('id', ParseIntPipe) updateId: number,
+    @Param('companyId', ParseIntPipe) updateId: number,
     @Body() updateCompanyProfile: CreateCompanyProfileDto,
   ) {
     return this.companyProfileService.updateAllCompanyProfile(updateId, updateCompanyProfile);
   }
 
   //upadte the company size
-  @Patch('updateCompanySize/:id')
+  @Patch('updateCompanySize/:companyId')
   updateCompanySize(
     @Param('id', ParseIntPipe) updateId: number,
     @Body() updateCompanySize: updateCompanyProfileDto,
@@ -61,24 +61,24 @@ export class CompanyProfileController {
   }
 
   //delete company
-  @Delete('deleteCompanyName/:id')
-  deleteCompanyProfile(@Param('id') companyId: number) {
+  @Delete('deleteCompanyName/:companyId')
+  deleteCompanyProfile(@Param('companyId') companyId: number) {
     return this.companyProfileService.deleteCompanyProfile(companyId);
   }
 
   //update all company contact
-  @Put('updateAllCompanyContact/:id')
+  @Put('updateAllCompanyContact/:companyId')
   updateAllCompanyContact(
-  @Param('id', ParseIntPipe) updateId: number,
+  @Param('companyId', ParseIntPipe) updateId: number,
   @Body() updateCompanyContact: CreateCompanyProfileDto,
   ) {
   return this.companyProfileService.updateAllCompanyContact(updateId, updateCompanyContact);
   }
 
   //update company email
- @Patch('updateCompanyEmail/:id')
+ @Patch('updateCompanyEmail/:companyId')
   updateCompanyContact(
-    @Param('id', ParseIntPipe) updateId: number,
+    @Param('companyId', ParseIntPipe) updateId: number,
     @Body() updateCompanyEmail: updateCompanyProfileDto,
   ) {
     return this.companyProfileService.updateCompanyContact(updateId, updateCompanyEmail);
