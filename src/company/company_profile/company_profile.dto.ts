@@ -8,6 +8,7 @@ import { IsString,
     MaxLength,
     IsMobilePhone,
     IsNotEmpty,
+    IsNumberString,
     } from 'class-validator';
 export class CreateCompanyProfileDto {
   companyId: number;

@@ -34,20 +34,20 @@ export class CompanyProfileService {
 
   //update company profile data
   async updateAllCompanyProfile(
-    id: number,
+    companyId: number,
     updateData: CreateCompanyProfileDto,
   ): Promise<CompanyProfileEntity> {
-    await this.userRepository.update(id, updateData);
-    return this.userRepository.findOneBy({ companyId: id });
+    await this.userRepository.update(companyId, updateData);
+    return this.userRepository.findOneBy({ companyId: companyId });
   }
 
-  //update company size
-  async updateCompanySize(
+  //update company name
+  async updateCompanyName(
     companyId: number, 
-    updateCompanySize: updateCompanyProfileDto
+    updatecompanyName: updateCompanyProfileDto
     ): Promise<CompanyProfileEntity> {
-      await this.userRepository.update(companyId, {companySize:updateCompanySize.updateCompanySize} );
-      return this.userRepository.findOneBy({companyId: companyId}); 
+      await this.userRepository.update(companyId, {companyName:updatecompanyName.upadatedcompanyName} );
+      return this.userRepository.findOneBy({companyId}); 
     }
 
  //delete company profile
@@ -69,9 +69,9 @@ export class CompanyProfileService {
   //update company contact email
   async updateCompanyContact(
     companyId: number, 
-    updateCompanyEmail: updateCompanyProfileDto
+    updatecompanyEmail: updateCompanyProfileDto
     ): Promise<CompanyProfileEntity> {
-      await this.userRepository.update(companyId, {companyEmail:updateCompanyEmail.updatecompanyEmail} );
+      await this.userRepository.update(companyId, {companyEmail:updatecompanyEmail.updatecompanyEmail} );
       return this.userRepository.findOneBy({companyId: companyId}); 
     }
 

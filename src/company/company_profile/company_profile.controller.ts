@@ -51,17 +51,18 @@ export class CompanyProfileController {
     return this.companyProfileService.updateAllCompanyProfile(updateId, updateCompanyProfile);
   }
 
-  //upadte the company size
-  @Patch('updateCompanySize/:companyId')
-  updateCompanySize(
-    @Param('id', ParseIntPipe) updateId: number,
-    @Body() updateCompanySize: updateCompanyProfileDto,
-    ) {
-    return this.companyProfileService.updateCompanySize(updateId, updateCompanySize);
-  }
+ //upadte the company name
+ @Patch('updateCompanyName/:companyId')
+ updateCompanyName(
+   @Param('companyId', ParseIntPipe) updateId: number,
+  @Body() updatecompanyName: updateCompanyProfileDto,
+  ) {
+       return this.companyProfileService.updateCompanyName(updateId, updatecompanyName);
+ }
+
 
   //delete company
-  @Delete('deleteCompanyName/:companyId')
+  @Delete('deleteCompanyByID/:companyId')
   deleteCompanyProfile(@Param('companyId') companyId: number) {
     return this.companyProfileService.deleteCompanyProfile(companyId);
   }
@@ -85,7 +86,7 @@ export class CompanyProfileController {
   }
 
   //delete company phone number
-  @Delete('deleteCompanyContact/:companyPhoneNumber')
+  @Delete('deleteCompanyByPhoneNumber/:companyPhoneNumber')
   deleteCompanyPhoneNumber(
     @Param('companyPhoneNumber') companyPhoneNumber: number,
   ) {
