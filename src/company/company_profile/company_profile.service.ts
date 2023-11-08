@@ -43,11 +43,11 @@ export class CompanyProfileService {
 
   //update company size
   async updateCompanySize(
-    id: number, 
+    companyId: number, 
     updateCompanySize: updateCompanyProfileDto
     ): Promise<CompanyProfileEntity> {
-      await this.userRepository.update(id, {companySize:updateCompanySize.updateCompanySize} );
-      return this.userRepository.findOneBy({companyId: id}); 
+      await this.userRepository.update(companyId, {companySize:updateCompanySize.updateCompanySize} );
+      return this.userRepository.findOneBy({companyId: companyId}); 
     }
 
  //delete company profile
@@ -59,20 +59,20 @@ export class CompanyProfileService {
 
   //update all company contact
   async updateAllCompanyContact(
-    id: number,
+    companyId: number,
     contactData: CreateCompanyProfileDto,
   ): Promise<CompanyProfileEntity> {
-    await this.userRepository.update(id, contactData);
-    return this.userRepository.findOneBy({ companyId: id });
+    await this.userRepository.update(companyId, contactData);
+    return this.userRepository.findOneBy({ companyId: companyId });
   }
 
   //update company contact email
   async updateCompanyContact(
-    id: number, 
+    companyId: number, 
     updateCompanyEmail: updateCompanyProfileDto
     ): Promise<CompanyProfileEntity> {
-      await this.userRepository.update(id, {companyEmail:updateCompanyEmail.updatecompanyEmail} );
-      return this.userRepository.findOneBy({companyId: id}); 
+      await this.userRepository.update(companyId, {companyEmail:updateCompanyEmail.updatecompanyEmail} );
+      return this.userRepository.findOneBy({companyId: companyId}); 
     }
 
   //delete company profile
@@ -81,8 +81,4 @@ export class CompanyProfileService {
   ): Promise<void> {
     await this.userRepository.delete(companyPhoneNumber);
   }
-
-
-
-
 }
