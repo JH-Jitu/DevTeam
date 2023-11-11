@@ -35,10 +35,10 @@ export class CreateCompanyProfileDto {
   companyEmail: string;
   @IsString()
   @IsNotEmpty()
-  @Matches(/^\+[1-9]\d{1,14}$/,{
-    message: "phone number must be in FormDataEvent."
+  @Matches(/^[1-9]\d{1,14}$/,{
+    message: "phone number must be in valid phone number."
   })
-  companyPhoneNumber: string;
+  companyPhoneNumber: number;
   @IsString()
   companyLocation: string;
 }

@@ -62,24 +62,6 @@ export class CompanyProfileController {
  }
 
 
-  //update company email
-  @Patch('updateCompanyEmail/:companyId')
-  updateCompanyEmail(
-    @Param('companyId', ParseIntPipe) updateId: number,
-    @Body() updateCompanyEmail: updateCompanyEmailDto,
-  ) {
-    return this.companyProfileService.updateCompanyEmail(updateId, updateCompanyEmail);
-  }
-
-
-
-
-
-
-
-
-
-
   //delete company
   @Delete('deleteCompanyByID/:companyId')
   deleteCompanyProfile(@Param('companyId') companyId: number) {
@@ -95,14 +77,22 @@ export class CompanyProfileController {
   return this.companyProfileService.updateAllCompanyContact(updateId, updateCompanyContact);
   }
 
- 
+ //update company email
+ @Patch('updateCompanyEmail/:companyId')
+ updateCompanyEmail(
+   @Param('companyId', ParseIntPipe) updateId: number,
+   @Body() updateCompanyEmail: updateCompanyEmailDto,
+ ) {
+   return this.companyProfileService.updateCompanyEmail(updateId, updateCompanyEmail);
+ }
+
 
   //delete company phone number
   @Delete('deleteCompanyByPhoneNumber/:companyPhoneNumber')
   deleteCompanyPhoneNumber(
     @Param('companyPhoneNumber') companyPhoneNumber: number,
   ) {
-    return companyPhoneNumber;
+    return this.companyProfileService.deleteCompanyContact(companyPhoneNumber);
   }
 
   //add company logo 

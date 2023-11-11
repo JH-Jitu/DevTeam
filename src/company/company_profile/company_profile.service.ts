@@ -40,7 +40,6 @@ export class CompanyProfileService {
   }
 
   //update company name // not working
-  
 
   //update company contact email
   async updateCompanyEmail(
@@ -52,7 +51,7 @@ export class CompanyProfileService {
     });
     return this.userRepository.findOneBy({ companyId: companyId });
   }
-  
+
   async updateCompanyName(
     companyId: number,
     updatecompanyName: updateCompanyNameDto,
@@ -62,8 +61,6 @@ export class CompanyProfileService {
     });
     return this.userRepository.findOneBy({ companyId: companyId });
   }
-  
-
 
   //delete company profile
   async deleteCompanyProfile(companyId: number): Promise<void> {
@@ -80,7 +77,9 @@ export class CompanyProfileService {
   }
 
   //delete company profile
-  async deleteCompanyContact(companyPhoneNumber: number): Promise<void> {
+  async deleteCompanyContact(
+    companyPhoneNumber: number
+    ): Promise<void> {
     await this.userRepository.delete(companyPhoneNumber);
   }
 }

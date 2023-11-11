@@ -17,7 +17,7 @@ companySize: number;
 @Column()
 companyEmail: string;
 @Column()
-companyPhoneNumber: string;
+companyPhoneNumber: number;
 @Column()
 companyLocation: string;
 }
