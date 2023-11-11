@@ -19,6 +19,7 @@ import { MulterError, diskStorage } from 'multer';
 import { CompanyProfileService } from './company_profile.service';
 import { CreateCompanyProfileDto } from './company_profile.dto';
 import { updateCompanyEmailDto } from './updateCompanyEmail_profile.dto';
+import { updateCompanyNameDto } from './updateCompanyName_profile.dto';
 @Controller('company')
 export class CompanyProfileController {
   constructor(private companyProfileService: CompanyProfileService) {}
@@ -51,14 +52,32 @@ export class CompanyProfileController {
     return this.companyProfileService.updateAllCompanyProfile(updateId, updateCompanyProfile);
   }
 
- //upadte the company name
+ //upadte the company name // not working
  @Patch('updateCompanyName/:companyId')
  updateCompanyName(
    @Param('companyId', ParseIntPipe) updateId: number,
-  @Body() updatecompanyName: updateCompanyEmailDto,
-  ) {
-       return this.companyProfileService.updateCompanyName(updateId, updatecompanyName);
+   @Body() updateCompanyName: updateCompanyNameDto,
+ ) {
+   return this.companyProfileService.updateCompanyName(updateId, updateCompanyName);
  }
+
+
+  //update company email
+  @Patch('updateCompanyEmail/:companyId')
+  updateCompanyEmail(
+    @Param('companyId', ParseIntPipe) updateId: number,
+    @Body() updateCompanyEmail: updateCompanyEmailDto,
+  ) {
+    return this.companyProfileService.updateCompanyEmail(updateId, updateCompanyEmail);
+  }
+
+
+
+
+
+
+
+
 
 
   //delete company
@@ -76,14 +95,7 @@ export class CompanyProfileController {
   return this.companyProfileService.updateAllCompanyContact(updateId, updateCompanyContact);
   }
 
-  //update company email
- @Patch('updateCompanyEmail/:companyId')
-  updateCompanyContact(
-    @Param('companyId', ParseIntPipe) updateId: number,
-    @Body() updateCompanyEmail: updateCompanyEmailDto,
-  ) {
-    return this.companyProfileService.updateCompanyContact(updateId, updateCompanyEmail);
-  }
+ 
 
   //delete company phone number
   @Delete('deleteCompanyByPhoneNumber/:companyPhoneNumber')
