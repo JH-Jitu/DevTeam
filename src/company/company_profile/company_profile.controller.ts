@@ -88,11 +88,11 @@ export class CompanyProfileController {
 
 
   //delete company phone number
-  @Delete('deleteCompanyByPhoneNumber/:companyPhoneNumber')
-  deleteCompanyPhoneNumber(
-    @Param('companyPhoneNumber') companyPhoneNumber: number,
+  @Delete('deleteCompanyContactByCompanyLocation/:companyId')
+  deleteCompanyLocation(
+    @Param('companyId') companyId: number,
   ) {
-    return this.companyProfileService.deleteCompanyContact(companyPhoneNumber);
+    return this.companyProfileService.deleteCompanyLocation( companyId);
   }
 
   //add company logo 

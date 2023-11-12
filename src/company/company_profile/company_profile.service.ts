@@ -77,9 +77,9 @@ export class CompanyProfileService {
   }
 
   //delete company profile
-  async deleteCompanyContact(
-    companyPhoneNumber: number
+  async deleteCompanyLocation(
+    companyId: number
     ): Promise<void> {
-    await this.userRepository.delete(companyPhoneNumber);
+    await this.userRepository.delete(companyId);
   }
 }
