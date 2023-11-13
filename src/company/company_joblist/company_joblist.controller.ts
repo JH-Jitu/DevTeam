@@ -58,9 +58,9 @@ export class CompanyjoblistController {
   }
 
   //upadte the job title
-  @Patch('updateJobTitle/:joblistId')
+  @Patch('updateJobTitle/:jobId')
   updateJobTitle(
-    @Param('joblistId', ParseIntPipe) jobId: number,
+    @Param('jobId', ParseIntPipe) jobId: number,
     @Body() updateJobTitle: updateJobTitleDto,
   ) {
     return this.companyJoblistService.updateJobTitle(jobId, updateJobTitle);
