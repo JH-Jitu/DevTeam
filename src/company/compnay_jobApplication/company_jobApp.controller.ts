@@ -102,7 +102,7 @@ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
     // get the cv in the postman
     @Get('/getImage/:name')
     getImages(@Param('name') name, @Res() res) {
-      return res.sendFile(name, { root: './uploads' });
+      return res.sendFile(name, { root: './uploadsFile' });
     }
   }
   

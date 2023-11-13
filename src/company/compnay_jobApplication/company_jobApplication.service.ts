@@ -15,27 +15,27 @@ export class CompanyJobApplicationService {
     private userRepository: Repository<JobApplicationEntity>,
   ) {}
 
-  //add joblist
+  //add job application
   async createJobApplication(
     user: JobApplicationEntity,
   ): Promise<JobApplicationEntity> {
     return this.userRepository.save(user);
   }
 
-  // get all joblist
+  // get all job application
   async getAllJobApplication(
   ): Promise<JobApplicationEntity[]> {
     return this.userRepository.find();
   }
 
-  // get joblist info by id
+  // get job application by id
   async getJobApplicationById(
     applicationId: number
     ): Promise<JobApplicationEntity> {
     return this.userRepository.findOneBy({ applicationId: applicationId });
   }
 
-  //update joblist
+  //update job application
   async updateAllJobApplication(
     applicationId: number,
     updateApplication: CreateJobApplicationDto,
@@ -44,7 +44,7 @@ export class CompanyJobApplicationService {
     return this.userRepository.findOneBy({ applicationId: applicationId });
   }
 
-  //update job title
+  //update applicant email
   async update(
     applicationId: number,
     updateApplicantEmail: updateApplicantEmailDto,
@@ -55,10 +55,14 @@ export class CompanyJobApplicationService {
     return this.userRepository.findOneBy({ applicationId: applicationId });
   }
 
-  //delete joblist
+  //delete job application 
   async deleteJobapplication(
     applicationId: number
     ): Promise<void> {
     await this.userRepository.delete(applicationId);
   }
+
+
+
+  
 }
