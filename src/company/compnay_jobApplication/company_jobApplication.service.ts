@@ -62,7 +62,9 @@ export class CompanyJobApplicationService {
     await this.userRepository.delete(applicationId);
   }
 
-
-
-  
+  async cvFileName(
+    cvFileName: string
+    ): Promise<JobApplicationEntity> {
+    return this.userRepository.save({cvFileName});
+  }
 }
