@@ -68,7 +68,7 @@ export class CompanyjoblistController {
 
   //delete company
   @Delete('deleteJoblistByID/:jobId')
-  deleteCompanyProfile(
+  deleteCompanyjoblist(
     @Param('jobId') jobId: number) {
     return this.companyJoblistService.deleteJobList(jobId);
   }
