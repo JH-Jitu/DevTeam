@@ -41,7 +41,7 @@ export class CompanyjoblistController {
   //get company joblist by id
   @Get('getJoblistByID/:jobId')
   getCompanyJoblistByID(
-    @Param('joblistId', ParseIntPipe) jobId: number) {
+    @Param('jobId', ParseIntPipe) jobId: number) {
     return this.companyJoblistService.getJoblistById(jobId);
   }
 
