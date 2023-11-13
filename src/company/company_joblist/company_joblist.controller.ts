@@ -78,7 +78,7 @@ export class CompanyjoblistController {
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: (req, file, cb) => {
-        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
+        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg|pdf)$/))
           cb(null, true);
         else {
           cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
@@ -86,7 +86,7 @@ export class CompanyjoblistController {
       },
       limits: { fileSize: 60000000000 },
       storage: diskStorage({
-        destination: './uploads',
+        destination: './cvuploads',
         filename: function (req, file, cb) {
           cb(null, Date.now() + file.originalname);
         },
