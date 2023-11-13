@@ -78,7 +78,7 @@ export class CompanyjoblistController {
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: (req, file, cb) => {
-        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg|pdf)$/))
+        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
           cb(null, true);
         else {
           cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
