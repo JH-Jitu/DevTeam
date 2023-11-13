@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CompanyjoblistController } from './company_joblist.controller';
 import { CompanyJoblistService } from './company_joblist.service';
-import { CompanyJoblistEntity } from './company_joblist.entity.dto';
+import { JoblistEntity } from './company_joblist.entity.dto';
 
 @Module({
-    imports : [TypeOrmModule.forFeature([CompanyJoblistEntity]),],
+    imports : [TypeOrmModule.forFeature([JoblistEntity]),],
     controllers : [CompanyjoblistController],
     providers:[CompanyJoblistService],
 

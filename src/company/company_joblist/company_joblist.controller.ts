@@ -22,7 +22,6 @@ import { updateJobTitleDto } from './updateJobTitle_joblist.dto';
 
 @Controller('job')
 export class CompanyjoblistController {
-  companyProfileService: any;
   constructor(private companyJoblistService: CompanyJoblistService) {}
 
   //add company joblist
@@ -52,7 +51,7 @@ export class CompanyjoblistController {
     @Param('jobId', ParseIntPipe) jobId: number,
     @Body() updateCompanyJoblist: CreateJoblistDto,
   ) {
-    return this.companyProfileService.updateAllJoblist(
+    return this.companyJoblistService.updateAllJoblist(
       jobId,
       updateCompanyJoblist,
     );
@@ -71,7 +70,7 @@ export class CompanyjoblistController {
   @Delete('deleteJoblistByID/:jobId')
   deleteCompanyProfile(
     @Param('jobId') jobId: number) {
-    return this.companyProfileService.deleteCompanyProfile(jobId);
+    return this.companyJoblistService.deleteJobList(jobId);
   }
 
   //add CV or Resume
