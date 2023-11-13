@@ -95,8 +95,9 @@ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
       }),
     )
     uploadFile(@UploadedFile() file: Express.Multer.File) {
-        const fileName = file.filename;
-        return this.companyJobApplicationService.cvFileName(fileName);
+        // const fileName = file.filename;
+        // return this.companyJobApplicationService.cvFileName(fileName);
+        return file;
     }
   
     // get the cv in the postman

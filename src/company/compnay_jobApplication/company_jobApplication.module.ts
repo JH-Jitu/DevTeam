@@ -10,4 +10,4 @@ import { JobApplicationEntity } from './company_jobApplication.entity';
     providers:[CompanyJobApplicationService],
 
 })
-export class CompanyJoblistModule {}
+export class CompanyJobApplicationModule {}

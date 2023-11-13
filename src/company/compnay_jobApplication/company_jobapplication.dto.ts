@@ -27,8 +27,8 @@ export class CreateJobApplicationDto {
   @IsDate()
   @Type(() => Date)
   applicationDate: Date;
-  @IsString()
-  cvFileName: string;
+  // @IsString()
+  // cvFileName: string;
 }
 
 
