@@ -74,7 +74,7 @@ export class CompanyjoblistController {
   }
 
   //add CV or Resume
-  @Post('uploadCV')
+  @Post('uploadFiles')
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: (req, file, cb) => {
@@ -86,7 +86,7 @@ export class CompanyjoblistController {
       },
       limits: { fileSize: 60000000000 },
       storage: diskStorage({
-        destination: './cvuploads',
+        destination: './src/company/company_joblist/uploadFiles',
         filename: function (req, file, cb) {
           cb(null, Date.now() + file.originalname);
         },
@@ -100,6 +100,6 @@ export class CompanyjoblistController {
   // get the cv in the postman
   @Get('/getImage/:name')
   getImages(@Param('name') name, @Res() res) {
-    return res.sendFile(name, { root: './uploads' });
+    return res.sendFile(name, { root: './src/company/company_joblist/uploadFiles' });
   }
 }

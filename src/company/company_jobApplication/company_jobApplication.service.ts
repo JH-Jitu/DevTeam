@@ -7,9 +7,7 @@ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
 
 @Injectable()
 export class CompanyJobApplicationService {
-  updateApplicantEmail(applicationId: number, updateApplicationEmail: updateApplicantEmailDto) {
-      throw new Error('Method not implemented.');
-  }
+
   constructor(
     @InjectRepository(JobApplicationEntity)
     private userRepository: Repository<JobApplicationEntity>,
@@ -45,7 +43,7 @@ export class CompanyJobApplicationService {
   }
 
   //update applicant email
-  async update(
+  async updateApplicantEmail(
     applicationId: number,
     updateApplicantEmail: updateApplicantEmailDto,
   ): Promise<JobApplicationEntity> {

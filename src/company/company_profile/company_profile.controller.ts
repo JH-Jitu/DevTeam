@@ -108,7 +108,7 @@ export class CompanyProfileController {
       },
       limits: { fileSize: 60000000000 },
       storage: diskStorage({
-        destination: './uploads',
+        destination: './src/company/company_profile/uploadedCompanyLogo',
         filename: function (req, file, cb) {
           cb(null, Date.now() + file.originalname);
         },
@@ -122,6 +122,6 @@ export class CompanyProfileController {
   // get the company logo in the postman
   @Get('/getImage/:name')
   getImages(@Param('name') name, @Res() res) {
-    return res.sendFile(name, { root: './uploads' });
+    return res.sendFile(name, { root: './src/company/company_profile/uploadedCompanyLogo'});
   }
 }

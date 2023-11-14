@@ -62,9 +62,9 @@ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
     @Patch('updateApplicantEmail/:applicationId')
     updateApplicantEmail(
       @Param('applicationId', ParseIntPipe) applicationId: number,
-      @Body() updateApplicationEmail: updateApplicantEmailDto,
+      @Body() updateApplicatEmail: updateApplicantEmailDto,
     ) {
-      return this.companyJobApplicationService.updateApplicantEmail(applicationId, updateApplicationEmail);
+      return this.companyJobApplicationService.updateApplicantEmail(applicationId, updateApplicatEmail);
     }
   
     //delete company
@@ -75,7 +75,7 @@ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
     }
   
     //add CV or Resume
-    @Post('uploadFile')
+    @Post('uploadCV')
     @UseInterceptors(
       FileInterceptor('file', {
         fileFilter: (req, file, cb) => {
@@ -87,7 +87,7 @@ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
         },
         limits: { fileSize: 60000000000 },
         storage: diskStorage({
-          destination: './uplodesFile',
+          destination: './src/company/company_jobApplication/uploadedCVs',
           filename: function (req, file, cb) {
             cb(null, Date.now() + file.originalname);
           },
@@ -103,7 +103,7 @@ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
     // get the cv in the postman
     @Get('/getImage/:name')
     getImages(@Param('name') name, @Res() res) {
-      return res.sendFile(name, { root: './uploadsFile' });
+      return res.sendFile(name, { root: './src/company/company_jobApplication/uploadedCVs' });
     }
   }
   
