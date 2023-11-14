@@ -20,4 +20,6 @@ companyEmail: string;
 companyPhoneNumber: string;
 @Column()
 companyLocation: string;
+@Column()
+password: string;
 }
