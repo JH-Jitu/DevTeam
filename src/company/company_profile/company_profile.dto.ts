@@ -41,6 +41,11 @@ export class CreateCompanyProfileDto {
   companyPhoneNumber: string;
   @IsString()
   companyLocation: string;
+  @IsString()
+  @Matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
+    message: 'Password must contain at least 8 characters, including letters, numbers, and at least one special character.',
+  })
+  password: string;
 }
 
 
