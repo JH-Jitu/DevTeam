@@ -16,14 +16,14 @@ export class CompanyProfileService {
 
   //add company profile
   async createCompanyProfile(
-    companyProfile: CompanyProfileEntity,
+    companyProfiles: CompanyProfileEntity,
   ): Promise<CompanyProfileEntity> {
-    const password = companyProfile.password;
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // const password = companyProfile.password;
+    // const salt = await bcrypt.genSalt();
+    // const hashedPassword = await bcrypt.hash(password, salt);
 
-    companyProfile.password = hashedPassword;
-    return this.userRepository.save(companyProfile);
+    // companyProfile.password = hashedPassword;
+    return this.userRepository.save(companyProfiles);
   }
 
   // get all company profile info

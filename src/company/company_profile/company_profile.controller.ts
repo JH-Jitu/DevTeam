@@ -20,16 +20,17 @@ import { CompanyProfileService } from './company_profile.service';
 import { CreateCompanyProfileDto } from './company_profile.dto';
 import { updateCompanyEmailDto } from './updateCompanyEmail_profile.dto';
 import { updateCompanyNameDto } from './updateCompanyName_profile.dto';
+import { CompanyProfileEntity } from './company_profile.entity';
 @Controller('company')
 export class CompanyProfileController {
   constructor(private companyProfileService: CompanyProfileService) {}
 
   //add company logo 
-  @Post('uploadCompanyLogo')
+  @Post('addCompanyProfile')
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: (req, file, cb) => {
-        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
+        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg|pdf)$/))
           cb(null, true);
         else {
           cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
@@ -44,8 +45,14 @@ export class CompanyProfileController {
       }),
     }),
   )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return file;
+  @UsePipes(new ValidationPipe())
+  addCompanyProfile(@UploadedFile() file: Express.Multer.File,
+  @Body() data: CreateCompanyProfileDto,
+  ) {
+    const fileName = file ? file.filename : null;
+    const companySize = Number(data.companySize);
+    const companyProfile = {...data,companySize,file: fileName,};
+    return this.companyProfileService.createCompanyProfile(companyProfile); 
   }
 
   // get the company logo in the postman
@@ -53,15 +60,7 @@ export class CompanyProfileController {
   getImages(@Param('name') name, @Res() res) {
     return res.sendFile(name, { root: './src/company/company_profile/uploadedCompanyLogo'});
   }
-  
-  //add company profile
-  @Post('addCompanyProfile')
-  @UsePipes(new ValidationPipe())
-  addCompanyProfile(@Body() data: CreateCompanyProfileDto, @UploadedFile() file: Express.Multer.File) {
-    const logoFileName: string = file.filename;
-    data.logoFileName = logoFileName;
-    return this.companyProfileService.createCompanyProfile(data);
-  }
+
 
   //get all company profile info
   @Get('getAllCompanyProfile')

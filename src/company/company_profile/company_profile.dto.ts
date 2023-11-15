@@ -25,7 +25,7 @@ export class CreateCompanyProfileDto {
   @IsDate()
   @Type(() => Date)
   companyCreatedDate: Date;
-  @IsNumber()
+  //@IsNumber()
   companySize: number;
   @IsEmail()
   @Matches(/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,{
@@ -46,9 +46,9 @@ export class CreateCompanyProfileDto {
     message: 'Password must contain at least 8 characters, including letters, numbers, and at least one special character.',
   })
   password: string;
-  @IsString()
-  logoFileName: string;
-  
+
+  file: string;
+
 }
 
 

@@ -23,5 +23,5 @@ companyLocation: string;
 @Column()
 password: string;
 @Column()
-logoFileName: string;
+file: string;
 }
