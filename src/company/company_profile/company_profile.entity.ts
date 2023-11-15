@@ -22,4 +22,6 @@ companyPhoneNumber: string;
 companyLocation: string;
 @Column()
 password: string;
+@Column()
+logoFileName: string;
 }

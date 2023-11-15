@@ -24,10 +24,42 @@ import { updateCompanyNameDto } from './updateCompanyName_profile.dto';
 export class CompanyProfileController {
   constructor(private companyProfileService: CompanyProfileService) {}
 
+  //add company logo 
+  @Post('uploadCompanyLogo')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      fileFilter: (req, file, cb) => {
+        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
+          cb(null, true);
+        else {
+          cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
+        }
+      },
+      limits: { fileSize: 60000000000 },
+      storage: diskStorage({
+        destination: './src/company/company_profile/uploadedCompanyLogo',
+        filename: function (req, file, cb) {
+          cb(null, Date.now() + file.originalname);
+        },
+      }),
+    }),
+  )
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return file;
+  }
+
+  // get the company logo in the postman
+  @Get('/getImage/:name')
+  getImages(@Param('name') name, @Res() res) {
+    return res.sendFile(name, { root: './src/company/company_profile/uploadedCompanyLogo'});
+  }
+  
   //add company profile
   @Post('addCompanyProfile')
   @UsePipes(new ValidationPipe())
-  addCompanyProfile(@Body() data: CreateCompanyProfileDto) {
+  addCompanyProfile(@Body() data: CreateCompanyProfileDto, @UploadedFile() file: Express.Multer.File) {
+    const logoFileName: string = file.filename;
+    data.logoFileName = logoFileName;
     return this.companyProfileService.createCompanyProfile(data);
   }
 
@@ -93,35 +125,5 @@ export class CompanyProfileController {
     @Param('companyId') companyId: number,
   ) {
     return this.companyProfileService.deleteCompanyLocation( companyId);
-  }
-
-  //add company logo 
-  @Post('uploadCompanyLogo')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      fileFilter: (req, file, cb) => {
-        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
-          cb(null, true);
-        else {
-          cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
-        }
-      },
-      limits: { fileSize: 60000000000 },
-      storage: diskStorage({
-        destination: './src/company/company_profile/uploadedCompanyLogo',
-        filename: function (req, file, cb) {
-          cb(null, Date.now() + file.originalname);
-        },
-      }),
-    }),
-  )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return file;
-  }
-
-  // get the company logo in the postman
-  @Get('/getImage/:name')
-  getImages(@Param('name') name, @Res() res) {
-    return res.sendFile(name, { root: './src/company/company_profile/uploadedCompanyLogo'});
   }
 }

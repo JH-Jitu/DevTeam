@@ -46,6 +46,9 @@ export class CreateCompanyProfileDto {
     message: 'Password must contain at least 8 characters, including letters, numbers, and at least one special character.',
   })
   password: string;
+  @IsString()
+  logoFileName: string;
+  
 }
 
 

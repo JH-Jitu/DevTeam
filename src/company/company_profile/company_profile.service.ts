@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { CompanyProfileEntity } from './company_profile.entity';
 import { CreateCompanyProfileDto } from './company_profile.dto';
 import { updateCompanyEmailDto } from './updateCompanyEmail_profile.dto';
@@ -15,9 +16,14 @@ export class CompanyProfileService {
 
   //add company profile
   async createCompanyProfile(
-    user: CompanyProfileEntity,
+    companyProfile: CompanyProfileEntity,
   ): Promise<CompanyProfileEntity> {
-    return this.userRepository.save(user);
+    const password = companyProfile.password;
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    companyProfile.password = hashedPassword;
+    return this.userRepository.save(companyProfile);
   }
 
   // get all company profile info
