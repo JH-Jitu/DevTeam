@@ -22,4 +22,6 @@ contactInfo: string;
 jobExperience: string;
 @Column()
 jobLocation: string;
+@Column()
+file: string;
 }

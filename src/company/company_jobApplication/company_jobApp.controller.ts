@@ -17,14 +17,56 @@ import {
   import { FileInterceptor } from '@nestjs/platform-express';
   import { MulterError, diskStorage } from 'multer';
   import { CompanyJobApplicationService } from './company_jobApplication.service';
-import { CreateJobApplicationDto } from './company_jobapplication.dto';
-import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
+  import { CreateJobApplicationDto } from './company_jobapplication.dto';
+ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
 
   
   @Controller('jobApply')
   export class CompanyJobApplicationController {
     constructor(private companyJobApplicationService: CompanyJobApplicationService) {}
   
+   //add job application
+   @Post('addJobApply')
+   @UseInterceptors(
+     FileInterceptor('file', {
+       fileFilter: (req, file, cb) => {
+         if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg|pdf)$/))
+           cb(null, true);
+         else {
+           cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
+         }
+       },
+       limits: { fileSize: 60000000000 },
+       storage: diskStorage({
+         destination: './src/company/company_jobApplication/uploadedCVs',
+         filename: function (req, file, cb) {
+           cb(null, Date.now() + file.originalname);
+         },
+       }),
+     }),
+   )
+   @UsePipes(new ValidationPipe())
+   addCompanyProfile(@UploadedFile() file: Express.Multer.File,
+   @Body() addApply: CreateJobApplicationDto,
+   ) {
+     const fileName = file ? file.filename : null;
+     const companyJobApplication = {...addApply,file: fileName,};
+     return this.companyJobApplicationService.createJobApplication(companyJobApplication); 
+   }
+    
+    // get the cv in the postman
+    @Get('/getImage/:name')
+    getImages(
+      @Param('name') name, @Res() res
+      ) {
+      return res.sendFile(name, { root: './src/company/company_jobApplication/uploadedCVs' });
+    }
+    
+    
+    
+    
+    
+    
     //add job application
     @Post('addJobApplication')
     @UsePipes(new ValidationPipe())
@@ -68,42 +110,10 @@ import { updateApplicantEmailDto } from './updateApplicationEmail.dto';
     }
   
     //delete company
-    @Delete('deleteJoblistByID/:applicationId')
+    @Delete('deleteJobApplicationByID/:applicationId')
     deleteCompanyJobApplication(
       @Param('applicationId') applicationId: number) {
       return this.companyJobApplicationService.deleteJobapplication(applicationId);
-    }
-  
-    //add CV or Resume
-    @Post('uploadCV')
-    @UseInterceptors(
-      FileInterceptor('file', {
-        fileFilter: (req, file, cb) => {
-          if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
-            cb(null, true);
-          else {
-            cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
-          }
-        },
-        limits: { fileSize: 60000000000 },
-        storage: diskStorage({
-          destination: './src/company/company_jobApplication/uploadedCVs',
-          filename: function (req, file, cb) {
-            cb(null, Date.now() + file.originalname);
-          },
-        }),
-      }),
-    )
-    uploadFile(@UploadedFile() file: Express.Multer.File) {
-        // const fileName = file.filename;
-        // return this.companyJobApplicationService.cvFileName(fileName);
-        return file;
-    }
-  
-    // get the cv in the postman
-    @Get('/getImage/:name')
-    getImages(@Param('name') name, @Res() res) {
-      return res.sendFile(name, { root: './src/company/company_jobApplication/uploadedCVs' });
     }
   }
   

@@ -14,9 +14,9 @@ export class CompanyJoblistService {
 
   //add joblist
   async createJoblist(
-    user: JoblistEntity,
+    joblists: JoblistEntity,
   ): Promise<JoblistEntity> {
-    return this.userRepository.save(user);
+    return this.userRepository.save(joblists);
   }
 
   // get all joblist

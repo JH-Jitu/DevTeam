@@ -13,7 +13,7 @@ export class CreateJobApplicationDto {
   @MaxLength(31)
   @Matches(/^[A-Za-z]+$/, {
     message:
-      'The job title must consist of letters only, and no spaces or special characters are allowed.',
+      'The applcante name must consist of letters only, and no spaces or special characters are allowed.',
   })
   applicanteName: string;
   @IsEmail()
@@ -27,8 +27,7 @@ export class CreateJobApplicationDto {
   @IsDate()
   @Type(() => Date)
   applicationDate: Date;
-  // @IsString()
-  // cvFileName: string;
+  file: string
 }
 
 

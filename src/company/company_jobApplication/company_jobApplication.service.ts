@@ -15,9 +15,9 @@ export class CompanyJobApplicationService {
 
   //add job application
   async createJobApplication(
-    user: JobApplicationEntity,
+    jobApplys: JobApplicationEntity,
   ): Promise<JobApplicationEntity> {
-    return this.userRepository.save(user);
+    return this.userRepository.save(jobApplys);
   }
 
   // get all job application
@@ -59,10 +59,4 @@ export class CompanyJobApplicationService {
     ): Promise<void> {
     await this.userRepository.delete(applicationId);
   }
-
-//   async cvFileName(
-//     cvFileName: string
-//     ): Promise<JobApplicationEntity> {
-//     return this.userRepository.save({cvFileName});
-//   }
 }

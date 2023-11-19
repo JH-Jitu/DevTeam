@@ -14,6 +14,6 @@ applicantEmail: string;
 positionAppliedFor: string;
 @Column()
 applicationDate: Date;
-// @Column()
-// cvFileName: string;
+@Column()
+file: string;
 }

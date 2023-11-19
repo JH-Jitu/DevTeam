@@ -11,6 +11,9 @@ import { IsString,
     IsNumberString,
     } from 'class-validator';
 export class CreateCompanyProfileDto {
+  salary(salary: any) {
+    throw new Error('Method not implemented.');
+  }
   companyId: number;
   @IsString()
   @MinLength(3)

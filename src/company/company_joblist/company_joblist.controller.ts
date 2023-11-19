@@ -24,12 +24,40 @@ import { updateJobTitleDto } from './updateJobTitle_joblist.dto';
 export class CompanyjoblistController {
   constructor(private companyJoblistService: CompanyJoblistService) {}
 
-  //add company joblist
-  @Post('addJoblist')
-  @UsePipes(new ValidationPipe())
-  addJoblist(
-    @Body() addData: CreateJoblistDto) {
-    return this.companyJoblistService.createJoblist(addData);
+   //add joblist
+   @Post('addJoblist')
+   @UseInterceptors(
+     FileInterceptor('file', {
+       fileFilter: (req, file, cb) => {
+         if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg|pdf)$/))
+           cb(null, true);
+         else {
+           cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
+         }
+       },
+       limits: { fileSize: 60000000000 },
+       storage: diskStorage({
+         destination: './src/company/company_joblist/uploadedFiles',
+         filename: function (req, file, cb) {
+           cb(null, Date.now() + file.originalname);
+         },
+       }),
+     }),
+   )
+   @UsePipes(new ValidationPipe())
+   addCompanyProfile(@UploadedFile() file: Express.Multer.File,
+   @Body() joblist: CreateJoblistDto,
+   ) {
+     const fileName = file ? file.filename : null;
+     const salary = Number(joblist.salary);
+     const companyJoblist = {...joblist,salary, file: fileName,};
+     return this.companyJoblistService.createJoblist(companyJoblist); 
+   }
+   
+   // get the cv in the postman
+  @Get('/getImage/:name')
+  getImages(@Param('name') name, @Res() res) {
+    return res.sendFile(name, { root: './src/company/company_joblist/uploadFiles' });
   }
 
   //get all company joblist
@@ -71,35 +99,5 @@ export class CompanyjoblistController {
   deleteCompanyjoblist(
     @Param('jobId') jobId: number) {
     return this.companyJoblistService.deleteJobList(jobId);
-  }
-
-  //add CV or Resume
-  @Post('uploadFiles')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      fileFilter: (req, file, cb) => {
-        if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
-          cb(null, true);
-        else {
-          cb(new MulterError('LIMIT_UNEXPECTED_FILE', 'image'), false);
-        }
-      },
-      limits: { fileSize: 60000000000 },
-      storage: diskStorage({
-        destination: './src/company/company_joblist/uploadFiles',
-        filename: function (req, file, cb) {
-          cb(null, Date.now() + file.originalname);
-        },
-      }),
-    }),
-  )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return file;
-  }
-
-  // get the cv in the postman
-  @Get('/getImage/:name')
-  getImages(@Param('name') name, @Res() res) {
-    return res.sendFile(name, { root: './src/company/company_joblist/uploadFiles' });
   }
 }
