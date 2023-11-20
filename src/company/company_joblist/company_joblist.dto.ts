@@ -31,7 +31,6 @@ export class CreateJoblistDto {
   @IsDate()
   @Type(() => Date)
   jobDatePosted: Date;
-  //@IsNumber()
   salary: number;
   @IsEmail()
   @Matches(/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,{
@@ -44,7 +43,6 @@ export class CreateJoblistDto {
   jobExperience: string;
   @IsString()
   jobLocation: string;
-  
   file: string;
 }
 

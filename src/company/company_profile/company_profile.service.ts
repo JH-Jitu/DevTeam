@@ -18,11 +18,10 @@ export class CompanyProfileService {
   async createCompanyProfile(
     companyProfiles: CompanyProfileEntity,
   ): Promise<CompanyProfileEntity> {
-    // const password = companyProfile.password;
-    // const salt = await bcrypt.genSalt();
-    // const hashedPassword = await bcrypt.hash(password, salt);
-
-    // companyProfile.password = hashedPassword;
+    const password = companyProfiles.password;
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    companyProfiles.password = hashedPassword;
     return this.userRepository.save(companyProfiles);
   }
 
@@ -45,7 +44,6 @@ export class CompanyProfileService {
     return this.userRepository.findOneBy({ companyId: companyId });
   }
 
-  //update company name // not working
 
   //update company contact email
   async updateCompanyEmail(

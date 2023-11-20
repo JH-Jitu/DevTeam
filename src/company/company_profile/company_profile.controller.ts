@@ -13,6 +13,10 @@ import {
   ParseIntPipe,
   UsePipes,
   ValidationPipe,
+  HttpException,
+  HttpStatus,
+  UseGuards,
+  Session,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterError, diskStorage } from 'multer';
@@ -21,6 +25,7 @@ import { CreateCompanyProfileDto } from './company_profile.dto';
 import { updateCompanyEmailDto } from './updateCompanyEmail_profile.dto';
 import { updateCompanyNameDto } from './updateCompanyName_profile.dto';
 import { CompanyProfileEntity } from './company_profile.entity';
+import { SessionGuard } from './session.guard';
 @Controller('company')
 export class CompanyProfileController {
   constructor(private companyProfileService: CompanyProfileService) {}
@@ -46,9 +51,10 @@ export class CompanyProfileController {
     }),
   )
   @UsePipes(new ValidationPipe())
-  addCompanyProfile(@UploadedFile() file: Express.Multer.File,
+  addCompanyProfile(@Session() session, @UploadedFile() file: Express.Multer.File,
   @Body() data: CreateCompanyProfileDto,
   ) {
+    session.companyEmail = data.companyEmail;
     const fileName = file ? file.filename : null;
     const companySize = Number(data.companySize);
     const companyProfile = {...data,companySize,file: fileName,};
@@ -57,72 +63,156 @@ export class CompanyProfileController {
 
   // get the company logo in the postman
   @Get('/getImage/:name')
-  getImages(@Param('name') name, @Res() res) {
+  getImages(
+    @Param('name') name, @Res() res
+    ) {
     return res.sendFile(name, { root: './src/company/company_profile/uploadedCompanyLogo'});
   }
 
 
   //get all company profile info
   @Get('getAllCompanyProfile')
+  @UseGuards (SessionGuard)
   getCompanyProfile() {
-    return this.companyProfileService.getAllCompanyProfileInfo();
+    try {
+      return this.companyProfileService.getAllCompanyProfileInfo();
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Internal Server Error.',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   //get company profile info by id
   @Get('getCompanyProfileByID/:companyId')
-  getCompanyByID(@Param('companyId', ParseIntPipe) companyById: number) {
-    return this.companyProfileService.getComapnyProfileById(companyById);
+  getCompanyByID(@Param('companyId', ParseIntPipe) companyId: number) {
+    try {
+      return this.companyProfileService.getComapnyProfileById(companyId);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Internal Server Error.',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
+
 
   //update company profile data
+  @UsePipes(new ValidationPipe())
   @Put('updateAllCompanyProfile/:companyId')
   updateAllCompanyProfile(
-    @Param('companyId', ParseIntPipe) updateId: number,
+    @Param('companyId', ParseIntPipe) companyId: number,
     @Body() updateCompanyProfile: CreateCompanyProfileDto,
   ) {
-    return this.companyProfileService.updateAllCompanyProfile(updateId, updateCompanyProfile);
+    try {
+      return this.companyProfileService.updateAllCompanyProfile(companyId, updateCompanyProfile);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Internal Server Error.',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
- //upadte the company name // not working
- @Patch('updateCompanyName/:companyId')
- updateCompanyName(
-   @Param('companyId', ParseIntPipe) updateId: number,
-   @Body() updateCompanyName: updateCompanyNameDto,
- ) {
-   return this.companyProfileService.updateCompanyName(updateId, updateCompanyName);
- }
-
+ //upadte the company name
+ @UsePipes(new ValidationPipe())
+  @Patch('updateCompanyName/:companyId')
+  updateCompanyName(
+    @Param('companyId', ParseIntPipe) companyId: number,
+    @Body() updateCompanyName: updateCompanyNameDto,
+  ) {
+    try {
+      return this.companyProfileService.updateCompanyName(companyId, updateCompanyName);
+      
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Internal Server Error.',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 
   //delete company
   @Delete('deleteCompanyByID/:companyId')
   deleteCompanyProfile(@Param('companyId') companyId: number) {
-    return this.companyProfileService.deleteCompanyProfile(companyId);
+    try {
+      return this.companyProfileService.deleteCompanyProfile(companyId);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Internal Server Error.',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   //update all company contact
   @Put('updateAllCompanyContact/:companyId')
   updateAllCompanyContact(
-  @Param('companyId', ParseIntPipe) updateId: number,
-  @Body() updateCompanyContact: CreateCompanyProfileDto,
+    @Param('companyId', ParseIntPipe) companyId: number,
+    @Body() updateCompanyContact: CreateCompanyProfileDto,
   ) {
-  return this.companyProfileService.updateAllCompanyContact(updateId, updateCompanyContact);
+    try {
+      return this.companyProfileService.updateAllCompanyContact(companyId, updateCompanyContact);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Internal Server Error.',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
  //update company email
  @Patch('updateCompanyEmail/:companyId')
- updateCompanyEmail(
-   @Param('companyId', ParseIntPipe) updateId: number,
-   @Body() updateCompanyEmail: updateCompanyEmailDto,
- ) {
-   return this.companyProfileService.updateCompanyEmail(updateId, updateCompanyEmail);
- }
+  updateCompanyEmail(
+    @Param('companyId', ParseIntPipe) companyId: number,  
+    @Body() updateCompanyEmail: updateCompanyEmailDto,
+  ) {
+    try {
+     return this.companyProfileService.updateCompanyEmail(companyId, updateCompanyEmail);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Internal Server Error.',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 
 
   //delete company phone number
   @Delete('deleteCompanyContactByCompanyLocation/:companyId')
-  deleteCompanyLocation(
-    @Param('companyId') companyId: number,
-  ) {
-    return this.companyProfileService.deleteCompanyLocation( companyId);
+  deleteCompanyLocation(@Param('companyId') companyId: number) {
+    try {
+      return this.companyProfileService.deleteCompanyLocation(companyId);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Internal Server Error.',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
