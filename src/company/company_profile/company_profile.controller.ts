@@ -54,12 +54,23 @@ export class CompanyProfileController {
   addCompanyProfile(@Session() session, @UploadedFile() file: Express.Multer.File,
   @Body() data: CreateCompanyProfileDto,
   ) {
+    try{
     session.companyEmail = data.companyEmail;
     const fileName = file ? file.filename : null;
     const companySize = Number(data.companySize);
+    const salary = Number (data.salary);
     const companyProfile = {...data,companySize,file: fileName,};
     return this.companyProfileService.createCompanyProfile(companyProfile); 
+  }catch (error) {
+    throw new HttpException(
+      {
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error: 'Internal Server Error.',
+      },
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    );
   }
+}
 
   // get the company logo in the postman
   @Get('/getImage/:name')
@@ -68,7 +79,6 @@ export class CompanyProfileController {
     ) {
     return res.sendFile(name, { root: './src/company/company_profile/uploadedCompanyLogo'});
   }
-
 
   //get all company profile info
   @Get('getAllCompanyProfile')
@@ -199,10 +209,11 @@ export class CompanyProfileController {
     }
   }
 
-
   //delete company phone number
   @Delete('deleteCompanyContactByCompanyLocation/:companyId')
-  deleteCompanyLocation(@Param('companyId') companyId: number) {
+  deleteCompanyLocation(
+    @Param('companyId') companyId: number
+    ) {
     try {
       return this.companyProfileService.deleteCompanyLocation(companyId);
     } catch (error) {
@@ -215,4 +226,5 @@ export class CompanyProfileController {
       );
     }
   }
+  
 }

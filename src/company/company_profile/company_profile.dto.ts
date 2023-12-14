@@ -11,6 +11,10 @@ import { IsString,
     IsNumberString,
     } from 'class-validator';
 export class CreateCompanyProfileDto {
+  jobTitle: string;
+  employeeType: string;
+  jobDatePosted: Date;
+  contactInfo: string;
   salary(salary: any) {
     throw new Error('Method not implemented.');
   }

@@ -24,4 +24,8 @@ companyLocation: string;
 password: string;
 @Column()
 file: string;
+
+// @OneToMany(() => JoblistEntity, joblist => joblist.company)
+// joblists: JoblistEntity[];
+
 }

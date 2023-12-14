@@ -56,7 +56,8 @@ export class CompanyJobApplicationService {
   //delete job application 
   async deleteJobapplication(
     applicationId: number
-    ): Promise<void> {
+    ): Promise<string> {
     await this.userRepository.delete(applicationId);
+    return "Company job application with ID deleted successfully."
   }
 }

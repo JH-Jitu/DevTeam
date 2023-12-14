@@ -6,12 +6,16 @@ import { CompanyProfileEntity } from './company_profile.entity';
 import { CreateCompanyProfileDto } from './company_profile.dto';
 import { updateCompanyEmailDto } from './updateCompanyEmail_profile.dto';
 import { updateCompanyNameDto } from './updateCompanyName_profile.dto';
+import { MailerService } from '@nestjs-modules/mailer';
+// import { JoblistEntity } from '../company_joblist/company_joblist.entity.dto';
 
 @Injectable()
 export class CompanyProfileService {
+  // companyJoblistService: any;
   constructor(
     @InjectRepository(CompanyProfileEntity)
-    private userRepository: Repository<CompanyProfileEntity>,
+    private companyRepository: Repository<CompanyProfileEntity>,
+    private readonly mailerService: MailerService,
   ) {}
 
   //add company profile
@@ -22,17 +26,20 @@ export class CompanyProfileService {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
     companyProfiles.password = hashedPassword;
-    return this.userRepository.save(companyProfiles);
+    return this.companyRepository.save(companyProfiles);
   }
 
   // get all company profile info
-  async getAllCompanyProfileInfo(): Promise<CompanyProfileEntity[]> {
-    return this.userRepository.find();
+  async getAllCompanyProfileInfo(
+  ): Promise<CompanyProfileEntity[]> {
+    return this.companyRepository.find();
   }
 
   // get company profile info by id
-  async getComapnyProfileById(id: number): Promise<CompanyProfileEntity> {
-    return this.userRepository.findOneBy({ companyId: id });
+  async getComapnyProfileById(
+    id: number
+    ): Promise<CompanyProfileEntity> {
+    return this.companyRepository.findOneBy({ companyId: id });
   }
 
   //update company profile data
@@ -40,8 +47,36 @@ export class CompanyProfileService {
     companyId: number,
     updateData: CreateCompanyProfileDto,
   ): Promise<CompanyProfileEntity> {
-    await this.userRepository.update(companyId, updateData);
-    return this.userRepository.findOneBy({ companyId: companyId });
+    await this.companyRepository.update(companyId, updateData);
+    return this.companyRepository.findOneBy({ companyId: companyId });
+  }
+
+  //update company name
+  async updateCompanyName(
+    companyId: number,
+    updatecompanyName: updateCompanyNameDto,
+  ): Promise<CompanyProfileEntity> {
+    await this.companyRepository.update(companyId, {
+      companyName: updatecompanyName.updatedcompanyName,
+    });
+    return this.companyRepository.findOneBy({ companyId: companyId });
+  }
+
+  //delete company profile
+  async deleteCompanyProfile(
+    companyId: number
+    ): Promise<string> {
+    await this.companyRepository.delete(companyId);
+    return "Company profile with ID deleted successfully.";
+  }
+
+  //update all company contact
+  async updateAllCompanyContact(
+    companyId: number,
+    contactData: CreateCompanyProfileDto,
+  ): Promise<CompanyProfileEntity> {
+    await this.companyRepository.update(companyId, contactData);
+    return this.companyRepository.findOneBy({ companyId: companyId });
   }
 
 
@@ -50,40 +85,33 @@ export class CompanyProfileService {
     companyId: number,
     updatecompanyEmail: updateCompanyEmailDto,
   ): Promise<CompanyProfileEntity> {
-    await this.userRepository.update(companyId, {
+    await this.companyRepository.update(companyId, {
       companyEmail: updatecompanyEmail.updatedcompanyEmail,
     });
-    return this.userRepository.findOneBy({ companyId: companyId });
-  }
-
-  async updateCompanyName(
-    companyId: number,
-    updatecompanyName: updateCompanyNameDto,
-  ): Promise<CompanyProfileEntity> {
-    await this.userRepository.update(companyId, {
-      companyName: updatecompanyName.updatedcompanyName,
-    });
-    return this.userRepository.findOneBy({ companyId: companyId });
-  }
-
-  //delete company profile
-  async deleteCompanyProfile(companyId: number): Promise<void> {
-    await this.userRepository.delete(companyId);
-  }
-
-  //update all company contact
-  async updateAllCompanyContact(
-    companyId: number,
-    contactData: CreateCompanyProfileDto,
-  ): Promise<CompanyProfileEntity> {
-    await this.userRepository.update(companyId, contactData);
-    return this.userRepository.findOneBy({ companyId: companyId });
+    return this.companyRepository.findOneBy({ companyId: companyId });
   }
 
   //delete company profile
   async deleteCompanyLocation(
     companyId: number
-    ): Promise<void> {
-    await this.userRepository.delete(companyId);
+    ): Promise<string> {
+    await this.companyRepository.delete(companyId);
+    return "Company profile is deleted successfully with Company Contact By CompanyLocation.";
+  }
+  
+  async getCode(companyEmail: string): Promise<string> {
+    try {
+      await this.mailerService.sendMail({
+        to: companyEmail, 
+        subject: 'for verification',
+        text: 'check the email',
+      });
+      return 'SomeCode';
+    } catch (error) {
+      console.error('Error sending mail:', error);
+      throw new Error('Failed to send email');
+    }
   }
 }
+
+

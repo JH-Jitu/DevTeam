@@ -1,6 +1,7 @@
 import { Entity, 
     Column, 
     PrimaryGeneratedColumn,
+    
 } from 'typeorm';
 @Entity('companyJoblist')
 export class JoblistEntity{
@@ -24,4 +25,9 @@ jobExperience: string;
 jobLocation: string;
 @Column()
 file: string;
+
+// @ManyToOne(() => CompanyProfileEntity, company => company.joblists)
+// @JoinColumn({ name: 'companyId' })
+// company: CompanyProfileEntity;
+
 }

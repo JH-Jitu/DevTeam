@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './Admin/admin.module';
 import { CompanyModule } from './company/company.module';
 import { ProgrammerModule } from './programmer/programmer.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -19,6 +20,19 @@ import { ProgrammerModule } from './programmer/programmer.module';
     AdminModule,
     ProgrammerModule,
     CompanyModule,
-  ],
+   MailerModule.forRoot(
+    {
+      transport: {
+        host : 'smtp.gmail.com',
+        port : 465,
+        ignoreTLS : true,
+        secure : true,
+        auth : {
+          user : 'ahmedsad0819@gmail.com',
+          pass : 'xwianrfxkmlevxhb'
+    }
+}})],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
