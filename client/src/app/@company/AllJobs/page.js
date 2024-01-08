@@ -4,7 +4,7 @@ import { AuthContext } from '@/context/AuthContext';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 
-const Interviews = () => {
+const AllJobs = () => {
   const context = useContext(AuthContext);
 
   const { loggedInUser } = context;
@@ -65,7 +65,7 @@ const Interviews = () => {
     { title: 'Joining Date', key: 'joiningDate' },
     { title: 'Required Skills', key: 'requiredSkills' },
     { title: 'Interviewer', key: 'interviewer' },
-    { title: 'Actions', key: 'Actions' },
+    // { title: 'Actions', key: 'Actions' },
   ];
 
   const data = searchResult
@@ -154,4 +154,4 @@ const Interviews = () => {
   );
 };
 
-export default Interviews;
+export default AllJobs;
