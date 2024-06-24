@@ -57,7 +57,9 @@ function DashboardNavbar() {
         <>
           {/* <Routes path="/" name={'Create Job'} /> */}
           <Routes path="/CreateJob" name={'Create Job'} />
-          <Routes path="/ManageJob" name={'Manage Job'} />
+          <Routes path="/AllJobs" name={'All Jobs'} />
+          <Routes path="/AllCompany" name={'All Company'} />
+          <Routes path="/AllDeveloper" name={'All Developer'} />
           <Routes
             path="/CompanyPersonalInformation"
             name={'Personal Information'}
